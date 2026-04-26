@@ -1,1 +1,78 @@
-<h1>It works</h1>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Match App</title>
+</head>
+
+<body style="font-family: Arial; text-align:center; margin-top:80px;">
+
+  <h1>Random Match App</h1>
+
+  <!-- STATUS -->
+  <div id="status">Ready</div>
+
+  <!-- BUTTONS -->
+  <button id="startBtn" onclick="startApp()">
+    Start
+  </button>
+
+  <button id="nextBtn" onclick="nextMatch()" style="display:none;">
+    Next
+  </button>
+
+  <script>
+    // 🔥 klare Zustände (wichtig für spätere echte App)
+    const STATE = {
+      IDLE: "idle",
+      SEARCHING: "searching",
+      MATCHED: "matched"
+    };
+
+    let state = STATE.IDLE;
+
+    function setState(newState) {
+      state = newState;
+
+      const status = document.getElementById("status");
+      const startBtn = document.getElementById("startBtn");
+      const nextBtn = document.getElementById("nextBtn");
+
+      if (newState === STATE.IDLE) {
+        status.innerText = "Ready";
+        startBtn.style.display = "inline-block";
+        nextBtn.style.display = "none";
+      }
+
+      if (newState === STATE.SEARCHING) {
+        status.innerText = "Searching for match...";
+        startBtn.style.display = "none";
+        nextBtn.style.display = "none";
+      }
+
+      if (newState === STATE.MATCHED) {
+        status.innerText = "Match Found 🎉";
+        startBtn.style.display = "none";
+        nextBtn.style.display = "inline-block";
+      }
+    }
+
+    function startApp() {
+      setState(STATE.SEARCHING);
+
+      // simuliertes Matching
+      setTimeout(() => {
+        setState(STATE.MATCHED);
+      }, 2000);
+    }
+
+    function nextMatch() {
+      setState(STATE.SEARCHING);
+
+      setTimeout(() => {
+        setState(STATE.MATCHED);
+      }, 1500);
+    }
+  </script>
+
+</body>
+</html>
